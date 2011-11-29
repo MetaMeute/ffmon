@@ -2,6 +2,7 @@
 
 # batctl o|cut -c1-17,19-27|tail -n +3
 
+# Draw all the things!
 redraw() {
 	draw_header
 	draw_nodelist
@@ -19,6 +20,7 @@ draw_nodelist() {
 	batctl o|cut -c1-17,19-27|tail -n +3
 }
 
+# Correct for changed lines/column values.
 resize() {
 	COLUMNS=$(tput cols)
 	LINES=$(tput lines)
@@ -29,20 +31,34 @@ cleanup() {
 	rm -rf $MACDIR
 }
 
+
+
+### PROGRAM STARTS HERE
+### ===================
+
+## Initialize
+## ----------
 COLUMNS=0
 LINES=0
 
-MACDIR=$(mktemp -d)
-
-trap cleanup EXIT
+# Create a temporary directory to keep track of all the connection data.
+MACDIR=$(mktemp -d ffmon.XXXXXXXXXX)
 
 resize
-
-trap resize WINCH
-
 clear
 
+## Program Loop
+## ------------
 while true; do
 	redraw
 	sleep 1
 done
+
+
+
+### TRAPS
+### =====
+trap cleanup EXIT
+
+# Trap terminal window resize operations
+trap resize WINCH
