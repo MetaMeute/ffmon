@@ -3,8 +3,8 @@
 # batctl o|cut -c1-17,19-27|tail -n +3
 
 redraw() {
-	clear
 	draw_header
+	draw_nodelist
 }
 
 draw_header() {
@@ -15,7 +15,8 @@ draw_header() {
 }
 
 draw_nodelist() {
-
+	echo -en "\033[2;1H\033[1;33m"
+	batctl o|cut -c1-17,19-27|tail -n +3
 }
 
 resize() {
