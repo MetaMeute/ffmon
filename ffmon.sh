@@ -25,8 +25,16 @@ resize() {
 	redraw
 }
 
+cleanup() {
+	rm -rf $MACDIR
+}
+
 COLUMNS=0
 LINES=0
+
+MACDIR=$(mktemp -d)
+
+trap cleanup EXIT
 
 resize
 
